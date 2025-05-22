@@ -32,6 +32,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=oszyjka_Sonar-Client
-            -Dsonar.organization=oszyjka
             -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
