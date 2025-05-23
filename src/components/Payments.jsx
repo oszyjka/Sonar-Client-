@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import api from '../api/axios';
+import PropTypes from 'prop-types';
 
 function Payments({ cartItems, clearCart }) {
   const [userName, setUserName] = useState('');
@@ -45,5 +46,10 @@ function Payments({ cartItems, clearCart }) {
     </div>
   );
 }
+
+Payments.propTypes = {
+  cartItems: PropTypes.array.isRequired,
+  clearCart: PropTypes.func.isRequired,
+};
 
 export default Payments;

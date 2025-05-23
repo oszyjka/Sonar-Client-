@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../api/axios';
+import PropTypes from 'prop-types';
 
 function Products({ addToCart }) {
   const [products, setProducts] = useState([]);
@@ -43,5 +44,9 @@ function Products({ addToCart }) {
     </div>
   );
 }
+
+Products.propTypes = {
+  addToCart: PropTypes.func.isRequired,
+};
 
 export default Products;

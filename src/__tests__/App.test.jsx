@@ -2,15 +2,15 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
 import App from '../App';
+import PropTypes from 'prop-types';
 
 const mockAddToCart = jest.fn();
 const mockRemoveFromCart = jest.fn();
 const mockClearCart = jest.fn();
 
 jest.mock('../hooks/useCart', () => {
-  const actual = jest.requireActual('../hooks/useCart');
+  jest.requireActual('../hooks/useCart');
   return {
     useCart: () => ({
       cartItems: [{ id: 1 }, { id: 2 }],
@@ -21,30 +21,59 @@ jest.mock('../hooks/useCart', () => {
   };
 });
 
-jest.mock('../components/Products', () => ({ addToCart }) => (
-  <div>
-    Products Page
-    <button onClick={() => addToCart({ id: 1, name: 'Test Product' })}>
-      Add Test Product
-    </button>
-  </div>
-));
+jest.mock('../components/Products', () => {
+  const PropTypes = require('prop-types');
+  const MockProducts = ({ addToCart }) => (
+    <div>
+      Products Page
+      <button onClick={() => addToCart({ id: 1, name: 'Test Product' })}>
+        Add Test Product
+      </button>
+    </div>
+  );
 
-jest.mock('../components/Cart', () => ({ cartItems, removeFromCart }) => (
-  <div>
-    Cart Page
-    <div data-testid="cart-count">{cartItems.length}</div>
-    <button onClick={() => removeFromCart(1)}>Remove Item</button>
-  </div>
-));
+  MockProducts.propTypes = {
+    addToCart: PropTypes.func.isRequired,
+  };
 
-jest.mock('../components/Payments', () => ({ cartItems, clearCart }) => (
-  <div>
-    Payments Page
-    <div data-testid="payment-count">{cartItems.length}</div>
-    <button onClick={clearCart}>Clear Cart</button>
-  </div>
-));
+  return MockProducts;
+});
+
+jest.mock('../components/Cart', () => {
+  const PropTypes = require('prop-types');
+  const MockCart = ({ cartItems, removeFromCart }) => (
+    <div>
+      Cart Page
+      <div data-testid="cart-count">{cartItems.length}</div>
+      <button onClick={() => removeFromCart(1)}>Remove Item</button>
+    </div>
+  );
+
+  MockCart.propTypes = {
+    cartItems: PropTypes.array.isRequired,
+    removeFromCart: PropTypes.func.isRequired,
+  };
+
+  return MockCart;
+});
+
+jest.mock('../components/Payments', () => {
+  const PropTypes = require('prop-types');
+  const MockPayments = ({ cartItems, clearCart }) => (
+    <div>
+      Payments Page
+      <div data-testid="payment-count">{cartItems.length}</div>
+      <button onClick={clearCart}>Clear Cart</button>
+    </div>
+  );
+
+  MockPayments.propTypes = {
+    cartItems: PropTypes.array.isRequired,
+    clearCart: PropTypes.func.isRequired,
+  };
+
+  return MockPayments;
+});
 
 describe('App routing and navigation', () => {
   beforeEach(() => {

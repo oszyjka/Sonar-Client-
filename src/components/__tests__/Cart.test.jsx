@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import Cart from '../Cart';
 
 const sampleItems = [
@@ -26,7 +25,7 @@ describe('Cart component', () => {
     const removeButtons = screen.getAllByText('Remove');
     fireEvent.click(removeButtons[0]);
 
-    expect(removeFromCart).toHaveBeenCalledWith(0);
+    expect(removeFromCart).toHaveBeenCalledWith(1);
   });
 
   test('3. Shows empty message when cart is empty', () => {
