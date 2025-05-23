@@ -25,7 +25,7 @@ jest.mock('../components/Products', () => {
   const MockProducts = ({ addToCart }) => (
     <div>
       Products Page
-      <button onClick={() => addToCart({ id: 1, name: 'Test Product' })}>
+      <button onClick={()=>addToCart({id: 1, name: 'Test Product'})}>
         Add Test Product
       </button>
     </div>
